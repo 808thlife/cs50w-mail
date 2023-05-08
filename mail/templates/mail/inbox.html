@@ -20,6 +20,7 @@
     <div id="compose-view">
         <h3>New Email</h3>
         <form id="compose-form" method = "post" name = "compose-form">
+            {% csrf_token %}
             <div class="form-group">
                 From: <input disabled class="form-control" value="{{ request.user.email }}">
             </div>
@@ -36,5 +37,5 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'mail/inbox.js' %}"></script>
+    <script src="{% static 'mail/inbox.js' %}" ></script>
 {% endblock %}

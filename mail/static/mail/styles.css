@@ -14,5 +14,7 @@ body{
 
 .email-body{
     padding-top:15px;
+    width: 100%;
+    height: 100%;
 }
       
