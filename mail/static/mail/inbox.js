@@ -145,7 +145,7 @@ function compose(){
     })
     .then(response => response.json())
     .then(result => {
-      load_mailbox('sent');
+      load_mailbox('sent')
       return false;
     })
   }) 
