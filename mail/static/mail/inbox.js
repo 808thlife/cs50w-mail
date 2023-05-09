@@ -112,10 +112,8 @@ function load_mailbox(mailbox) {
         reply.addEventListener('click', function(){
           compose_email();
           document.querySelector('#compose-subject').value = `Re: ${email.subject}`;
-
-          while (document.querySelector('#compose-subject').value.includes("Re: Re: ")){
-              document.querySelector("#compose-subject").value = document.querySelector('#compose-subject').value.replace("Re: Re: ", "Re: ");
-          }
+          //removing dublicates of Re: 
+          document.querySelector('#compose-subject').value = document.querySelector('#compose-subject').value.replace(/^(Re:\s+)+/g, 'Re: ');
 
           document.querySelector('#compose-recipients').value = `${email.sender}`;
           document.querySelector('#compose-body').value = `
