@@ -111,14 +111,15 @@ function load_mailbox(mailbox) {
         reply.className = "btn btn-primary";
         reply.addEventListener('click', function(){
           compose_email();
-          if (document.querySelector('#compose-subject').value.startsWith("Re: ")){
-            document.querySelector('#compose-subject').value.replace("Re: ", "");
-          }
           document.querySelector('#compose-subject').value = `Re: ${email.subject}`;
+
+          while (document.querySelector('#compose-subject').value.includes("Re: Re: ")){
+              document.querySelector("#compose-subject").value = document.querySelector('#compose-subject').value.replace("Re: Re: ", "Re: ");
+          }
+
           document.querySelector('#compose-recipients').value = `${email.sender}`;
           document.querySelector('#compose-body').value = `
           On ${email.timestamp} ${email.sender} wrote: ${email.body}`;
-
           compose();
         })
 
@@ -135,17 +136,17 @@ document.querySelector('#emails-view').append(element);
 function compose(){
   document.querySelector("#compose-form").addEventListener('submit', (event)=>{
     event.preventDefault();
-    fetch('/emails/', {
+    fetch('/emails', {
       method: 'POST',
       body: JSON.stringify({
-        recipients: document.querySelector('#compose-recipients').value,
-        subject: document.querySelector('#compose-subject').value,
-        body: document.querySelector('#compose-body').value
+          recipients: document.querySelector('#compose-recipients').value,
+          subject: document.querySelector('#compose-subject').value,
+          body: document.querySelector('#compose-body').value
       })
     })
     .then(response => response.json())
     .then(result => {
-      load_mailbox('sent')
+      load_mailbox('sent');
       return false;
     })
   }) 
